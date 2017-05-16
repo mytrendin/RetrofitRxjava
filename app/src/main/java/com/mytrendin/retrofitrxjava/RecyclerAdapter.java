@@ -1,10 +1,13 @@
 package com.mytrendin.retrofitrxjava;
 
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.util.List;
 
@@ -17,24 +20,34 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.Myhold
 
     List<ProductModel> list;
 
-    public RecyclerAdapter(List<ProductModel> list) {
+    ImageLoader imageLoader;
+    public RecyclerAdapter(List<ProductModel> list, ImageLoader imageLoader) {
         this.list = list;
-
+        this.imageLoader=imageLoader;
     }
 
     @Override
     public Myholder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return null;
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.show,parent,false);
+        Myholder myHolder = new Myholder(view);
+        return myHolder;
     }
 
     @Override
     public void onBindViewHolder(Myholder holder, int position) {
 
+        ProductModel product = list.get(position);
+        holder.pname.setText(product.getProductname());
+        holder.pcolor.setText(product.getColor());
+        String image1 = product.getImageurl();
+        imageLoader.displayImage(image1, holder.pimage);
+        holder.price.setText("INR "+product.getPrice());
+
     }
 
     @Override
     public int getItemCount() {
-        return 0;
+        return list.size();
     }
 
     public class Myholder extends RecyclerView.ViewHolder{
