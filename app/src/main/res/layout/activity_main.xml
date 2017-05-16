@@ -16,9 +16,5 @@
        android:id="@+id/recyclerview"
 
        >
-
-
-
-
    </android.support.v7.widget.RecyclerView>
 </RelativeLayout>
