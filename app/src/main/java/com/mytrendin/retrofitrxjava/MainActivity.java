@@ -2,6 +2,8 @@ package com.mytrendin.retrofitrxjava;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 
 import java.util.List;
 
@@ -15,10 +17,13 @@ import rx.schedulers.Schedulers;
 
 public class MainActivity extends AppCompatActivity {
 
+    RecyclerView recyclerView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        recyclerView = (RecyclerView) findViewById(R.id.recyclerview);
         getProductData();
     }
 
@@ -30,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
     public void getProductData(){
 
         Retrofit retrofit = new Retrofit.Builder()
-                            .baseUrl("api2.mytrendin.com")
+                            .baseUrl("http://api2.mytrendin.com")
                             .addConverterFactory(GsonConverterFactory.create())
                             .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                              .build();
@@ -51,6 +56,12 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onNext(List<ProductModel> productModels) {
+
+                for (int i =0;i<productModels.size();i++){
+
+                   Log.i("Hello",""+productModels.get(i).getProductname());
+
+                }
 
             }
         });
